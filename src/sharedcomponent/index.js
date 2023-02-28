@@ -301,3 +301,33 @@ const ratingStyle = StyleSheet.create({
     resizeMode: 'cover',
   },
 });
+
+export const CustomInput = ({placeholder, onChangeText, type}) => {
+  // If you type something in the text box that is a color, the background will change to that
+  // color.
+  return (
+    <View className="my-2">
+      <TextInput
+        onChangeText={onChangeText}
+        inputMode={type}
+        placeholder={placeholder}
+        className="w-full bg-white mx-auto px-4 py-4 rounded-2xl text-black"
+      />
+    </View>
+  );
+};
+export const CustomTextArea = ({placeholder, onChangeText, value, type}) => {
+  // If you type something in the text box that is a color, the background will change to that
+  // color.
+  return (
+    <View>
+      <TextInput
+        value={value}
+        inputMode={type}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        className="w-[100%] bg-white mx-auto h-24 px-4 rounded-2xl text-black"
+      />
+    </View>
+  );
+};

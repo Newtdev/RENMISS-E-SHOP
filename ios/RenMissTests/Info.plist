@@ -19,6 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>1</string>
 </dict>
 </plist>

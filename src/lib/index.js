@@ -53,10 +53,11 @@ export const categoryData = [
 export const ESHOPDATA = [
   {
     id: 1,
-    heading: 'Promote your business',
+    heading: 'Create Shop',
     description:
       'Let everyone see your services and product you sell at the top of your page for easy accessiblity',
     image: <Firstcard width={70} height={70} />,
+    link: 'Create-shop',
   },
   {
     id: 2,
@@ -64,12 +65,14 @@ export const ESHOPDATA = [
     description:
       'Explore services close to your location for in person services delivered to you at convinience  ',
     image: <Secondcard width={70} height={70} />,
+    link: 'Create-shop',
   },
   {
     id: 3,
     heading: 'My shop',
     description: 'You can fully access your shop here and now',
     image: <Thirdcard width={70} height={70} />,
+    link: 'Create-shop',
   },
   {
     id: 4,
@@ -77,6 +80,7 @@ export const ESHOPDATA = [
     description:
       'bookmark your favorite product you want to buy later and return to it',
     image: <Forthcard width={70} height={70} />,
+    link: 'Create-shop',
   },
 ];
 export const SPONSOREDDATA = [

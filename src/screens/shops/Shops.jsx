@@ -9,6 +9,7 @@ import {
   ScreenWrapper,
 } from '../../sharedcomponent';
 import Filter from '../../assets/filter.svg';
+import {useNavigation} from '@react-navigation/native';
 
 const trucateText = str => {
   let limit = 17;
@@ -18,14 +19,13 @@ const trucateText = str => {
   return str;
 };
 
-const renderList = (item, width, navigation) => {
-  console.log(item?.item?.id);
+const RenderList = (item, width, navigation) => {
   const {block, shop, name, image} = item?.item;
   return (
     <Pressable
       className="h-[212px] mt-2 ml-3 rounded-[14px] bg-red-900 overflow-hidden"
       style={{width: width}}
-      onPress={() => navigation.navigate('Shop')}>
+      onPress={() => navigation.navigate('Shop Details')}>
       <ImageWrapper image={image}>
         <View className=" h-[55%] w-full">
           <View
@@ -61,9 +61,10 @@ const renderList = (item, width, navigation) => {
   );
 };
 
-const Shops = ({navigation}) => {
+const Shops = () => {
   const {width} = useWindowDimensions();
   const shopWidth = Math.round(width / 2);
+  const navigation = useNavigation();
 
   const getValuesisArray = useMemo(() => {
     let result = [];
@@ -99,7 +100,7 @@ const Shops = ({navigation}) => {
               </View>
               <CustomeFlatList
                 renderData={blocks}
-                renderDisplay={item => renderList(item, shopWidth, navigation)}
+                renderDisplay={item => RenderList(item, shopWidth, navigation)}
               />
             </View>
           );

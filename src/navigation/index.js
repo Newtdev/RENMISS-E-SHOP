@@ -23,6 +23,7 @@ import Filter from '../screens/filter';
 import ShopDetails from '../screens/shop';
 import Product from '../screens/product';
 import WishList from '../screens/wishlist';
+import CreateShop from '../screens/createshop';
 
 const Tab = createBottomTabNavigator();
 
@@ -199,7 +200,8 @@ const MainPageNavigation = () => {
       <Tab.Screen name="Chat" component={Market} />
       <Tab.Screen name="Wallet" component={Shops} />
       <Tab.Screen name="eShop" component={Market} />
-      <Tab.Screen name="More" component={Category} />
+      {/* <Tab.Screen name="More" component={Category} /> */}
+      <Tab.Screen name="Create-shop" component={CreateShop} />
     </Tab.Navigator>
   );
 };
@@ -213,9 +215,12 @@ const CustomNavigation = () => {
       {/* <Screen name="Category" component={Category} /> */}
       <Screen name="Market" component={MainPageNavigation} />
       <Screen name="Search" component={Filter} />
-      <Screen name="Shop" component={ShopDetails} />
+      <Screen name="Shop Details" component={ShopDetails} />
+      <Screen name="Shop" component={Shops} />
       <Screen name="Product" component={Product} />
       <Screen name="Wishlist" component={WishList} />
+      <Tab.Screen name="Create-shop" component={CreateShop} />
+
       {/* <Stack.Screen name="Home" component={Home} />
       {/* <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Profile" component={Profile} />

@@ -4,6 +4,7 @@ import {
   Modal,
   ActivityIndicator,
   ImageBackground,
+  Pressable,
 } from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -25,15 +26,17 @@ import Star from '../../assets/Star.svg';
 import Chair from '../../assets/chair.svg';
 import BackgroundTwo from '../../assets/secondCardImage.svg';
 import currency from 'currency.js';
+import {useNavigation} from '@react-navigation/native';
 
-const renderEshopList = (details, width) => {
+const RenderEshopList = (details, width, navigation) => {
   const {item} = details;
   // each card 1.3 by screen size
   const cardWidth = Math.round(width / 1.3);
   const Widths = Math.round(width / 1.2);
 
   return (
-    <View
+    <Pressable
+      onPress={() => navigation.navigate(item?.link)}
       className={`h-[138px] mx-4 rounded-[15px] bg-white flex flex-row items-center mt-6`}
       style={{width: cardWidth}}>
       <View className="p-3 w-[70%]">
@@ -41,7 +44,7 @@ const renderEshopList = (details, width) => {
         <Text className="text-[10px] mt-2">{item.description}</Text>
       </View>
       <View className="">{item.image}</View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -82,24 +85,26 @@ const RenderSponsoredList = (details, width) => {
   );
 };
 
-const Market = () => {
+const Market = ({navigation}) => {
   const {width} = useWindowDimensions();
 
   return (
     <ScreenWrapper content={<UserHeader />}>
-      <ScrollView className="mt-28 pb-6">
+      <ScrollView className="pb-6">
         <View className=" w-full pb-4">
           <View>
             <FlatList
               data={ESHOPDATA}
-              renderItem={item => renderEshopList(item, width)}
+              renderItem={item => RenderEshopList(item, width, navigation)}
               keyExtractor={item => item.id}
               showsHorizontalScrollIndicator={false}
               horizontal
             />
           </View>
           <BackgroundWrapper image={image}>
-            <View className="flex flex-row justify-between px-4 py-2">
+            <Pressable
+              onPress={() => navigation.navigate('Shop')}
+              className="flex flex-row justify-between px-4 py-2">
               <View className="w-[50%]">
                 <Text className="text-base font-bold">Shop E</Text>
                 <Text className="text-[10px] py-2">
@@ -111,7 +116,7 @@ const Market = () => {
               <View className="w-36 h-36 px-2">
                 <CardImage />
               </View>
-            </View>
+            </Pressable>
           </BackgroundWrapper>
           <View className="ml-4 my-2 ">
             <Text>Sponsored</Text>
@@ -122,7 +127,7 @@ const Market = () => {
             {/* image */}
             <FlatList
               data={SPONSOREDDATA}
-              renderItem={item => RenderSponsoredList(item, width)}
+              renderItem={item => RenderSponsoredList(item, width, navigation)}
               keyExtractor={item => item.id}
               showsHorizontalScrollIndicator={false}
               horizontal
