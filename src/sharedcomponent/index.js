@@ -18,6 +18,9 @@ import Bell from '../assets/bell.svg';
 import Settings from '../assets/settings.svg';
 import Dots from '../assets/dots.svg';
 import BackArrow from '../assets/backArrow.svg';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {active, notActive} from '../features/createshop';
 
 export const AuthHeader = ({name, description}) => {
   const [text, setText] = useState('');
@@ -72,11 +75,10 @@ export const Input = ({
 
 export const Loader = () => {
   return (
-    <View>
-      <View className="h-4 w-4">
-        <ActivityIndicator size="small" color="#0000ff" />
-      </View>
-    </View>
+    <>
+      <ActivityIndicator size="large" color="#b70000" />
+      <Text className="ml-2">Loading...</Text>
+    </>
   );
 };
 
@@ -115,14 +117,60 @@ const styles = StyleSheet.create({
   },
 });
 
-export const PageLoader = () => {
+export const PageLoader = ({submitting, children}) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={true}>
-      <View className=" h-full w-full flex items-center justify-center mx-auto bg-[#000001]">
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={submitting ? true : false}>
+      <View
+        className=" h-full w-full flex items-center justify-center mx-auto"
+        style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
         <View className="w-3/4 h-14 bg-white shadow-sm flex flex-row justify-center items-center rounded">
-          <ActivityIndicator size="large" color="#b70000" />
-          <Text className="ml-2">Loading...</Text>
+          {children}
         </View>
+      </View>
+    </Modal>
+  );
+};
+export const ConfirmationUI = ({heading, para, onRequest}) => {
+  const dispatch = useDispatch();
+  return (
+    <View className="h-[256px] rounded-tl-[30] rounded-tr-[30] bg-white w-full mt-auto flex flex-col items-center py-6">
+      <View>
+        <Text className="text-lg font-bold text-center text-[#003356]">
+          {heading}
+        </Text>
+        <Text className="text-sm font-bold text-center px-16 text-black mt-4">
+          {para}
+        </Text>
+      </View>
+      <View className="w-full mt-4 py-2 ">
+        <Pressable
+          className="py-2 bg-[#003356] w-[50%] rounded-xl mx-auto"
+          onPress={onRequest}>
+          <Text className="text-center text-white text-sm">Continue</Text>
+        </Pressable>
+        <Pressable
+          className="py-2 bg-[#b70000] w-[50%] mt-4 rounded-xl mx-auto"
+          onPress={() => dispatch(notActive())}>
+          <Text className="text-center text-white text-sm">Cancel</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+};
+
+export const ModalWrapper = ({children, submitting}) => {
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={submitting ? true : false}>
+      <View
+        className=" h-full w-full flex items-center justify-center mx-auto"
+        style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+        {children}
       </View>
     </Modal>
   );
@@ -302,7 +350,14 @@ const ratingStyle = StyleSheet.create({
   },
 });
 
-export const CustomInput = ({placeholder, onChangeText, type}) => {
+export const CustomInput = ({
+  placeholder,
+  onChangeText,
+  type,
+  value,
+  error,
+  touched,
+}) => {
   // If you type something in the text box that is a color, the background will change to that
   // color.
   return (
@@ -310,13 +365,24 @@ export const CustomInput = ({placeholder, onChangeText, type}) => {
       <TextInput
         onChangeText={onChangeText}
         inputMode={type}
+        value={value}
         placeholder={placeholder}
-        className="w-full bg-white mx-auto px-4 py-4 rounded-2xl text-black"
+        className="w-full bg-white mx-auto px-4 py-2 rounded-lg text-black"
       />
+      {error && touched ? (
+        <Text className="mt-1 ml-2 text-xs text-red-600">{error}</Text>
+      ) : null}
     </View>
   );
 };
-export const CustomTextArea = ({placeholder, onChangeText, value, type}) => {
+export const CustomTextArea = ({
+  placeholder,
+  onChangeText,
+  value,
+  type,
+  error,
+  touched,
+}) => {
   // If you type something in the text box that is a color, the background will change to that
   // color.
   return (
@@ -328,6 +394,9 @@ export const CustomTextArea = ({placeholder, onChangeText, value, type}) => {
         placeholder={placeholder}
         className="w-[100%] bg-white mx-auto h-24 px-4 rounded-2xl text-black"
       />
+      {error && touched ? (
+        <Text className="mt-1 ml-2 text-xs text-red-600">{error}</Text>
+      ) : null}
     </View>
   );
 };

@@ -24,6 +24,7 @@ import ShopDetails from '../screens/shop';
 import Product from '../screens/product';
 import WishList from '../screens/wishlist';
 import CreateShop from '../screens/createshop';
+import Receipt from '../screens/receipt';
 
 const Tab = createBottomTabNavigator();
 
@@ -220,6 +221,7 @@ const CustomNavigation = () => {
       <Screen name="Product" component={Product} />
       <Screen name="Wishlist" component={WishList} />
       <Tab.Screen name="Create-shop" component={CreateShop} />
+      {/* <Tab.Screen name="Receipt" component={Receipt} /> */}
 
       {/* <Stack.Screen name="Home" component={Home} />
       {/* <Stack.Screen name="Notifications" component={Notifications} />

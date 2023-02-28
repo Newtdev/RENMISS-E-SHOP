@@ -1,52 +1,93 @@
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import {
   Button,
+  ConfirmationUI,
   CustomInput,
   CustomTextArea,
+  Loader,
+  ModalWrapper,
   NavigationHeaderWapper,
+  PageLoader,
   ScreenWrapper,
 } from '../../sharedcomponent';
+import 'react-native-get-random-values';
 import ImagePicker from 'react-native-image-crop-picker';
 import Upload from '../../assets/upload.png';
 import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {createShopInfo, selectNewShop} from '../../features/createshop';
+import {
+  active,
+  createShopInfo,
+  request,
+  selectNewShop,
+  show,
+  showLoader,
+} from '../../features/createshop';
+import {useFormik} from 'formik';
+import {CreateShopSchema} from '../../yup';
+import {nanoid} from 'nanoid';
 
 const CreateShop = ({navigation}) => {
-  const [image, setImage] = useState('');
   const dispatch = useDispatch();
-  const shopDetails = useSelector(selectNewShop);
-  const [info, setInfo] = useState({name: ''});
+  const showModal = useSelector(show);
+  const loading = useSelector(request);
+  const {
+    handleChange,
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+    isSubmitting,
+    setSubmitting,
+  } = useFormik({
+    initialValues: {
+      name: '',
+      description: '',
+      phoneNumber: '',
+      email: '',
+      address: '',
+      imageURL: '',
+    },
+    validationSchema: CreateShopSchema,
+    onSubmit: values => {
+      setSubmitting(true);
+      dispatch(active());
 
-  // const handleChoosePhoto = async () => {
-  //   await launchImageLibrary(
-  //     {
-  //       storageOptions: {
-  //         skipBackup: true,
-  //         path: 'images',
-  //       },
-  //     },
-  //     res => {
+      console.log({...values, idempotentKey: nanoid(32)});
+    },
+  });
 
-  //       setInfo({...info, banner: res?.assets[0]?.uri});
-  //       // console.log(res?.assets[0]?.uri);
-  //     },
-  //   ).catch(err => {
-  //     console.log(err);
-  //   });
-  // };
-
-  const onChangeText = (e, a) => {
-    setInfo({...info, [a]: e});
+  const handleChoosePhoto = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    })
+      .then(image => {
+        setFieldValue('imageURL', image);
+      })
+      .catch(err => console.log(err));
   };
-
-  const onClick = e => console.log(info);
 
   return (
     <ScreenWrapper
       content={
         <NavigationHeaderWapper name="Create Shop" back={navigation.goBack} />
       }>
+      {console.log(loading)}
+      <PageLoader submitting={loading}>
+        <Loader />
+      </PageLoader>
+
+      <ModalWrapper submitting={showModal}>
+        <ConfirmationUI
+          heading="Transaction Confirmation"
+          para="You will be charged R20,000 for this operation"
+          onRequest={() => dispatch(showLoader())}
+        />
+      </ModalWrapper>
       <ScrollView>
         {/* <NavigationHeaderWapper name="Create Shop" back={navigation.goBack} /> */}
         <View className="h-screen  w-full mx-auto px-10 mb-5">
@@ -57,60 +98,71 @@ const CreateShop = ({navigation}) => {
             <CustomInput
               placeholder="Enter shop name"
               type="text"
-              onChangeText={text => onChangeText(text, 'name')}
+              value={values?.name}
+              onChangeText={handleChange('name')}
+              error={errors?.name}
+              touched={touched?.name}
             />
-            <View className="mt-4">
+            <View className="mt-3">
               <CustomTextArea
-                onChangeText={text => onChangeText(text, 'decription')}
                 placeholder="Description"
                 type="text"
+                value={values?.description}
+                onChangeText={handleChange('description')}
+                onBlur={handleBlur('description')}
+                error={errors?.description}
+                touched={touched?.description}
               />
             </View>
           </View>
-          <View className=" flex flex-col justify-between mt-4">
-            <Text className="text-lg text-[#003356] ml-2 ">
+          <View className=" flex flex-col justify-between">
+            <Text className="text-lg text-[#003356] ml-2 mt-4 mb-2 ">
               Contact Address
             </Text>
             <CustomInput
               placeholder="Phone number"
-              onChangeText={text => onChangeText(text, 'phone')}
               type="tel"
+              value={values?.phoneNumber}
+              onChangeText={handleChange('phoneNumber')}
+              onBlur={handleBlur('phoneNumber')}
+              error={errors?.phoneNumber}
+              touched={touched?.phoneNumber}
             />
 
             <CustomInput
               placeholder="Email address"
               type="email"
-              onChangeText={text => onChangeText(text, 'email')}
+              value={values?.email}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              error={errors?.email}
+              touched={touched?.email}
             />
             <CustomInput
               placeholder="Physical address"
               type="text"
-              onChangeText={text => onChangeText(text, 'address')}
+              value={values?.address}
+              onChangeText={handleChange('address')}
+              onBlur={handleBlur('address')}
+              error={errors?.address}
+              touched={touched?.address}
             />
           </View>
 
           <View className="mx-auto mt-9 ">
             <Pressable
               className="h-28 w-36 bg-white rounded-lg flex flex-col items-center justify-center p-3"
-              onPress={() =>
-                ImagePicker.openPicker({
-                  width: 300,
-                  height: 400,
-                  cropping: true,
-                }).then(image => {
-                  console.log(image);
-                })
-              }>
-              {info?.banner ? (
+              onPress={handleChoosePhoto}>
+              {values?.imageURL?.banner ? (
                 <Image
                   source={{
-                    uri: `${image}`,
+                    uri: `${values?.imageURL}`,
                   }}
                   className=" h-16 w-24"
                   resizeMode="cover"
                 />
               ) : null}
-              {!info?.banner ? (
+              {!values?.imageURL ? (
                 <Image source={Upload} resizeMode="cover" />
               ) : null}
               <Text className="text-[10px] mt-2 font-bold">
@@ -119,7 +171,7 @@ const CreateShop = ({navigation}) => {
             </Pressable>
           </View>
           <View className="w-full bg-red-800 mt-10 flex flex-row items-center justify-center">
-            <Button name="Done" onPress={onClick} />
+            <Button name="Done" onPress={handleSubmit} />
           </View>
         </View>
       </ScrollView>
