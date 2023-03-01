@@ -16,6 +16,8 @@
     "@reduxjs/toolkit": "^1.9.2",
     "currency.js": "^2.0.4",
     "formik": "^2.2.9",
+    "lottie-ios": "^3.4.1",
+    "lottie-react-native": "^5.1.5",
     "nanoid": "^4.0.1",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
