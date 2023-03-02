@@ -18,6 +18,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   active,
   createShopInfo,
+  notActive,
   request,
   selectNewShop,
   show,
@@ -76,7 +77,6 @@ const CreateShop = ({navigation}) => {
       content={
         <NavigationHeaderWapper name="Create Shop" back={navigation.goBack} />
       }>
-      {console.log(loading)}
       <PageLoader submitting={loading}>
         <Loader />
       </PageLoader>
@@ -86,6 +86,7 @@ const CreateShop = ({navigation}) => {
           heading="Transaction Confirmation"
           para="You will be charged R20,000 for this operation"
           onRequest={() => dispatch(showLoader())}
+          onClose={() => dispatch(notActive())}
         />
       </ModalWrapper>
       <ScrollView>

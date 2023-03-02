@@ -1,6 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {RenmissApi} from '../features/services/api';
 import createShopSlice from '../features/createshop';
+import invoiceSlice from '../features/invoice';
 
 export const store = configureStore({
   // reducers
@@ -8,6 +9,7 @@ export const store = configureStore({
     // API
     [RenmissApi.reducerPath]: RenmissApi.reducer,
     createShopSlice,
+    invoiceSlice,
   },
   // middlewares
   middleware: getDefaultMiddleware =>

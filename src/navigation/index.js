@@ -25,6 +25,8 @@ import Product from '../screens/product';
 import WishList from '../screens/wishlist';
 import CreateShop from '../screens/createshop';
 import Receipt from '../screens/receipt';
+import Invoices from '../screens/invoices';
+import InvoiceDetails from '../screens/invoice-details/InvoiceDetails';
 
 const Tab = createBottomTabNavigator();
 
@@ -212,6 +214,7 @@ const CustomNavigation = () => {
   return (
     <Navigator screenOptions={{headerShown: false}}>
       <Screen name="Home" component={Onboarding} />
+      <Screen name="invoice" component={InvoiceDetails} />
       <Screen name="Reason" component={SelectReason} />
       {/* <Screen name="Category" component={Category} /> */}
       <Screen name="Market" component={MainPageNavigation} />
@@ -220,6 +223,7 @@ const CustomNavigation = () => {
       <Screen name="Shop" component={Shops} />
       <Screen name="Product" component={Product} />
       <Screen name="Wishlist" component={WishList} />
+      <Screen name="invoice-management" component={Invoices} />
       <Tab.Screen name="Create-shop" component={CreateShop} />
       {/* <Tab.Screen name="Receipt" component={Receipt} /> */}
 

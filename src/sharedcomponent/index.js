@@ -5,33 +5,24 @@ import {
   ImageBackground,
   TextInput,
   Pressable,
-  ActivityIndicator,
   Modal,
   StyleSheet,
   FlatList,
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Bell from '../assets/bell.svg';
 import Settings from '../assets/settings.svg';
 import Dots from '../assets/dots.svg';
 import BackArrow from '../assets/backArrow.svg';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {active, notActive} from '../features/createshop';
+import Lottie from 'lottie-react-native';
 
 export const AuthHeader = ({name, description}) => {
   const [text, setText] = useState('');
   return (
     <>
       <View className="h-36 w-full">
-        {/* <ImageBackground
-          //   source={Image}
-          resizeMode="contain"
-          className="h-36 -mt-1"
-        /> */}
         <TextInput
           className="py-4 px-4 border border-red-900"
           onChangeText={setText}
@@ -64,7 +55,7 @@ export const Input = ({
   return (
     <View className="w-64 bg-red-900">
       <TextInput
-        className="py-1 border border-0 rounded-sm text-white"
+        className="py-1  border-0 rounded-sm text-white"
         onChangeText={onChangeText}
         placeholder={placeholder}
         keyboardType="numeric"
@@ -75,12 +66,14 @@ export const Input = ({
 
 export const Loader = () => {
   return (
-    <>
-      <ActivityIndicator size="large" color="#b70000" />
-      <Text className="ml-2">Loading...</Text>
-    </>
+    <View>
+      <Lottie source={require('../assets/lotties.json')} autoPlay loop />
+      <Text className="ml-2 text-white mt-10 font-bold">Loading...</Text>
+    </View>
   );
 };
+
+/* <ActivityIndicator size="large" color="#b70000" /> */
 
 export const Button = ({name, onPress}) => {
   return (
@@ -126,15 +119,14 @@ export const PageLoader = ({submitting, children}) => {
       <View
         className=" h-full w-full flex items-center justify-center mx-auto"
         style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
-        <View className="w-3/4 h-14 bg-white shadow-sm flex flex-row justify-center items-center rounded">
+        <View className="w-3/4 h-14  shadow-sm flex flex-row justify-center items-center rounded">
           {children}
         </View>
       </View>
     </Modal>
   );
 };
-export const ConfirmationUI = ({heading, para, onRequest}) => {
-  const dispatch = useDispatch();
+export const ConfirmationUI = ({heading, para, onRequest, onClose}) => {
   return (
     <View className="h-[256px] rounded-tl-[30] rounded-tr-[30] bg-white w-full mt-auto flex flex-col items-center py-6">
       <View>
@@ -153,7 +145,7 @@ export const ConfirmationUI = ({heading, para, onRequest}) => {
         </Pressable>
         <Pressable
           className="py-2 bg-[#b70000] w-[50%] mt-4 rounded-xl mx-auto"
-          onPress={() => dispatch(notActive())}>
+          onPress={onClose}>
           <Text className="text-center text-white text-sm">Cancel</Text>
         </Pressable>
       </View>
@@ -274,7 +266,12 @@ export const NavigationHeaderWapper = ({name, back}) => {
   );
 };
 
-export const CustomeFlatList = ({renderData, renderDisplay, width}) => {
+export const CustomeFlatList = ({
+  renderData,
+  renderDisplay,
+  width,
+  vertical,
+}) => {
   if (!renderData) {
     return null;
   }
@@ -284,7 +281,7 @@ export const CustomeFlatList = ({renderData, renderDisplay, width}) => {
       renderItem={item => renderDisplay(item, width)}
       keyExtractor={item => item.id}
       showsHorizontalScrollIndicator={false}
-      horizontal
+      horizontal={vertical ? false : true}
     />
   );
 };

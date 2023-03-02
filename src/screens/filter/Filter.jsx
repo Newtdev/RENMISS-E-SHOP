@@ -99,7 +99,7 @@ const Filter = ({navigation}) => {
         <NavigationHeaderWapper name="Search" back={navigation.goBack} />
       }>
       <View>
-        <View className="w-full h-16 mt-32 flex flex-row items-center justify-evenly">
+        <View className="w-full h-16 flex flex-row items-center justify-evenly">
           <Pressable className="">
             <Text className="text-red-700">Shops</Text>
             <View className="w-[18px] h-0.5 bg-[#b70000] mx-auto"></View>
