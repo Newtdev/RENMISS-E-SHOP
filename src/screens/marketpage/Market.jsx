@@ -15,7 +15,6 @@ import {
   Button,
   Input,
   Loader,
-  ScreenWrapper,
   UserHeader,
 } from '../../sharedcomponent';
 import {useWindowDimensions} from 'react-native';
@@ -27,6 +26,7 @@ import Chair from '../../assets/chair.svg';
 import BackgroundTwo from '../../assets/secondCardImage.svg';
 import currency from 'currency.js';
 import {useNavigation} from '@react-navigation/native';
+import ScreenWrapper from '../../components/ScreenWrapper';
 
 const RenderEshopList = (details, width, navigation) => {
   const {item} = details;
@@ -89,66 +89,65 @@ const Market = ({navigation}) => {
   const {width} = useWindowDimensions();
 
   return (
-    <ScreenWrapper content={<UserHeader />}>
-      <ScrollView className="pb-6">
-        <View className=" w-full pb-4">
-          <View>
-            <FlatList
-              data={ESHOPDATA}
-              renderItem={item => RenderEshopList(item, width, navigation)}
-              keyExtractor={item => item.id}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-            />
-          </View>
-          <BackgroundWrapper image={image}>
+    <ScreenWrapper>
+      <ScrollView className="w-full ">
+        <View>
+          <FlatList
+            data={ESHOPDATA}
+            renderItem={item => RenderEshopList(item, width, navigation)}
+            keyExtractor={item => item.id}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+          />
+        </View>
+        <BackgroundWrapper image={image}>
+          <Pressable
+            onPress={() => navigation.navigate('Shop')}
+            className="flex flex-row justify-between px-4 py-2">
+            <View className="w-[50%]">
+              <Text className="text-base font-bold">Shop E</Text>
+              <Text className="text-[10px] py-2">
+                Welcome to our shop! We're glad you're here. Please take a look
+                around and let us know if there's anything we can help you find
+              </Text>
+            </View>
+            <View className="w-36 h-36 px-2">
+              <CardImage />
+            </View>
+          </Pressable>
+        </BackgroundWrapper>
+        <View className="ml-4 my-2 ">
+          <Text>Sponsored</Text>
+        </View>
+        <View
+          className=" 
+          px-1">
+          {/* image */}
+          <FlatList
+            data={SPONSOREDDATA}
+            renderItem={item => RenderSponsoredList(item, width, navigation)}
+            keyExtractor={item => item.id}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+          />
+        </View>
+        <View className="mt-3">
+          <BackgroundWrapper>
             <Pressable
-              onPress={() => navigation.navigate('Shop')}
-              className="flex flex-row justify-between px-4 py-2">
-              <View className="w-[50%]">
-                <Text className="text-base font-bold">Shop E</Text>
+              onPress={() => navigation.navigate('ServicesCategory')}
+              className="flex flex-col justify-between px-4 bg-white rounded-lg py-4">
+              <View className="w-[60%] ">
+                <Text className="text-base font-bold">Services</Text>
                 <Text className="text-[10px] py-2">
-                  Welcome to our shop! We're glad you're here. Please take a
-                  look around and let us know if there's anything we can help
-                  you find
+                  Welcome to our services! We are here to provide you with
+                  top-notch solutions to meet your needs
                 </Text>
               </View>
-              <View className="w-36 h-36 px-2">
-                <CardImage />
+              <View className="w-36 ">
+                <BackgroundTwo width={180} />
               </View>
             </Pressable>
           </BackgroundWrapper>
-          <View className="ml-4 my-2 ">
-            <Text>Sponsored</Text>
-          </View>
-          <View
-            className=" 
-          px-1">
-            {/* image */}
-            <FlatList
-              data={SPONSOREDDATA}
-              renderItem={item => RenderSponsoredList(item, width, navigation)}
-              keyExtractor={item => item.id}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-            />
-          </View>
-          <View className="mt-3">
-            <BackgroundWrapper>
-              <View className="flex flex-col justify-between px-4 bg-white rounded-lg py-4">
-                <View className="w-[60%] ">
-                  <Text className="text-base font-bold">Services</Text>
-                  <Text className="text-[10px] py-2">
-                    Welcome to our services! We are here to provide you with
-                    top-notch solutions to meet your needs
-                  </Text>
-                </View>
-                <View className="w-36 ">
-                  <BackgroundTwo width={180} />
-                </View>
-              </View>
-            </BackgroundWrapper>
-          </View>
         </View>
       </ScrollView>
     </ScreenWrapper>

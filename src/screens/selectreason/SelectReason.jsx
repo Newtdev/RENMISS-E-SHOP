@@ -36,10 +36,13 @@ const ReasonCard = props => {
     <Card>
       <Pressable
         onPress={() => {
-          if (id === 1) {
-            navigation.navigate('Market');
-          } else {
-            navigation.navigate('Market');
+          switch (id) {
+            case 1:
+              navigation.navigate('Market');
+              break;
+            default:
+              navigation.navigate('Create-shop');
+              break;
           }
         }}
         className={` h-full flex flex-row justify-between rounded-[15px] p-4 cursor-pointer`}
