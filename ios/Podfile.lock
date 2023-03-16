@@ -77,7 +77,7 @@ PODS:
     - hermes-engine/Pre-built (= 0.71.1)
   - hermes-engine/Pre-built (0.71.1)
   - libevent (2.1.12)
-  - lottie-ios (3.4.1)
+  - lottie-ios (3.4.0)
   - lottie-react-native (5.1.5):
     - lottie-ios (~> 3.4.0)
     - React-Core
@@ -401,7 +401,7 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNScreens (3.19.0):
+  - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
   - RNSVG (13.8.0):
@@ -610,7 +610,7 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: 922ccd744f50d9bfde09e9677bf0f3b562ea5fb9
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  lottie-ios: 016449b5d8be0c3dcbcfa0a9988469999cd04c5d
+  lottie-ios: 69495122151a378fdc7d1bb4c5930347e37baf1f
   lottie-react-native: 3e722c63015fdb9c27638b0a77969fc412067c18
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -644,7 +644,7 @@ SPEC CHECKSUMS:
   ReactCommon: 03be76588338a27a88d103b35c3c44a3fd43d136
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
-  RNScreens: ea4cd3a853063cda19a4e3c28d2e52180c80f4eb
+  RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
@@ -654,4 +654,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: fc13a3968ba2e0150964d74a0cb0d29998c83c4c
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

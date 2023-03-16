@@ -89,6 +89,7 @@ const CreateShop = ({navigation}) => {
           onClose={() => dispatch(notActive())}
         />
       </ModalWrapper>
+      
       <ScrollView>
         {/* <NavigationHeaderWapper name="Create Shop" back={navigation.goBack} /> */}
         <View className="h-screen  w-full mx-auto px-10 mb-5">

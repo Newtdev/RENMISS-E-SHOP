@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Market from '../screens/marketpage';
@@ -27,6 +28,13 @@ import CreateShop from '../screens/createshop';
 import Receipt from '../screens/receipt';
 import Invoices from '../screens/invoices';
 import InvoiceDetails from '../screens/invoice-details/InvoiceDetails';
+import ServicesCategory from '../screens/services/ServicesCategory';
+import {COLORS} from '../utils/Colors';
+import BackButton, {RightHeaderButton} from '../components/Buttons';
+import ServiceProviders from '../screens/services/ServiceProviders';
+import ServiceProviderDetails from '../screens/services/ServiceProviderDetails';
+import EditHandle from '../screens/services/EditHandle';
+import CreateHandle from '../screens/services/CreateHandle';
 
 const Tab = createBottomTabNavigator();
 
@@ -212,11 +220,13 @@ const MainPageNavigation = () => {
 const CustomNavigation = () => {
   // MARKET CUSTOM NAVIGATION
   return (
-    <Navigator screenOptions={{headerShown: false}}>
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Screen name="Home" component={Onboarding} />
       <Screen name="invoice" component={InvoiceDetails} />
       <Screen name="Reason" component={SelectReason} />
-      {/* <Screen name="Category" component={Category} /> */}
       <Screen name="Market" component={MainPageNavigation} />
       <Screen name="Search" component={Filter} />
       <Screen name="Shop Details" component={ShopDetails} />
@@ -224,16 +234,78 @@ const CustomNavigation = () => {
       <Screen name="Product" component={Product} />
       <Screen name="Wishlist" component={WishList} />
       <Screen name="invoice-management" component={Invoices} />
-      <Tab.Screen name="Create-shop" component={CreateShop} />
-      {/* <Tab.Screen name="Receipt" component={Receipt} /> */}
+      <Screen
+        name="ServicesCategory"
+        component={ServicesCategory}
+        options={({navigation, route}) => ({
+          headerShown: true,
+          headerLeft: () => (
+            <BackButton onPress={() => navigation.goBack(null)} />
+          ),
+          headerRight: () => (
+            <RightHeaderButton
+              onPress={() => navigation.navigate('CreateHandle')}
+              iconName={'add-business'}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: COLORS.shop,
+          },
+          headerTintColor: COLORS.white,
+        })}
+      />
+      <Screen name="CreateHandle" component={CreateHandle} />
+      <Screen
+        name="ServiceProviders"
+        component={ServiceProviders}
+        options={({navigation, route}) => ({
+          headerShown: true,
+          headerLeft: () => (
+            <BackButton onPress={() => navigation.goBack(null)} />
+          ),
+          headerStyle: {
+            backgroundColor: COLORS.shop,
+          },
+          headerTintColor: COLORS.white,
+        })}
+      />
+      <Screen
+        name="ServiceProviderDetails"
+        component={ServiceProviderDetails}
+        options={({navigation, route}) => ({
+          headerShown: true,
+          headerLeft: () => (
+            <BackButton onPress={() => navigation.goBack(null)} />
+          ),
+          headerRight: () => (
+            <RightHeaderButton
+              onPress={() => navigation.navigate('EditHandle')}
+              iconName={'edit'}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: COLORS.shop,
+          },
+          headerTintColor: COLORS.white,
+        })}
+      />
+      <Screen
+        name="EditHandle"
+        component={EditHandle}
+        options={({navigation, route}) => ({
+          headerShown: true,
+          headerLeft: () => (
+            <BackButton onPress={() => navigation.goBack(null)} />
+          ),
+          headerStyle: {
+            backgroundColor: COLORS.shop,
+          },
+          headerTintColor: COLORS.white,
+        })}
+      />
 
-      {/* <Stack.Screen name="Home" component={Home} />
-      {/* <Stack.Screen name="Notifications" component={Notifications} />
-      <Stack.Screen name="Profile" component={Profile} />
-    <Stack.Screen name="Settings" component={Settings} /> */}
+      <Tab.Screen name="Create-shop" component={CreateShop} />
     </Navigator>
-    //   </ScrollView>
-    // </SafeAreaView>
   );
 };
 
