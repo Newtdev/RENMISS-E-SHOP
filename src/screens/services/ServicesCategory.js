@@ -12,19 +12,19 @@ import {COLORS} from '../../utils/Colors';
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Web Design',
+    name: 'Web Design',
     description: 'Explore to get the best designer for your work.',
     image: banner,
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Mobile App Development',
+    name: 'Mobile App Development',
     description: 'Explore to get the best developer for your idea.',
     image: banner,
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Fashion Design',
+    name: 'Fashion Design',
     description: 'Best fashion designer for your outfit.',
     image: banner,
   },
@@ -59,7 +59,7 @@ const ServicesCategory = ({navigation}) => {
                     {item.description}
                   </Text>
                   <Text className="text-lg text-white font-bold">
-                    {item.title}
+                    {item.name}
                   </Text>
                 </View>
               </Pressable>
@@ -72,7 +72,7 @@ const ServicesCategory = ({navigation}) => {
           }}
         />
         {/* <ServicesCategoryCard
-          title={'Web Design'}
+          name={'Web Design'}
           description={'Explore to get the best designer for work.'}
           banner={banner}
         /> */}

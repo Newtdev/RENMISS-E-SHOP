@@ -6,7 +6,7 @@ import {SubmitButton} from '../../components/Buttons';
 import {DefaultCard} from '../../components/Cards';
 import Icon, {Icons} from '../../components/Icons';
 import {CustomTextInput} from '../../components/Inputs';
-import {ModalWrapper} from '../../components/Modals';
+import ModalWrapper from '../../components/Modals';
 import ScreenWrapper from '../../components/ScreenWrapper';
 import {COLORS} from '../../utils/Colors';
 
@@ -16,30 +16,24 @@ const SERVICES_DATA = [
     title: 'Renmiss Limited',
     description: 'Explore to get the best designer for your work.',
     price: 3.5,
+    type: 'Workshop',
+    location: 'no 12 Sambrerio crescent off limpopo street',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
     title: 'Tratrust Limited',
     description: 'Get all your travelling document easily at your comfort.',
     price: 4.0,
+    type: 'Mobile',
+    location: '',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d721',
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
     title: 'Bellocare Foundation',
     description: 'Explore to get the best designer for your work.',
     price: 1.5,
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f633',
-    title: 'Tratrust Limited',
-    description: 'Get all your travelling document easily at your comfort.',
-    price: 4.0,
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d782',
-    title: 'Bellocare Foundation',
-    description: 'Explore to get the best designer for your work.',
-    price: 1.5,
+    type: 'Hybrid',
+    location: 'no 12 Sambrerio crescent off limpopo street',
   },
 ];
 
@@ -50,7 +44,7 @@ const EditHandle = () => {
     <>
       <ScreenWrapper>
         <KeyboardAvoidingView
-          keyboardVerticalOffset={10}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : 80}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <View
             style={{
@@ -105,11 +99,39 @@ const EditHandle = () => {
                             </Pressable>
                           </View>
                           <Text className="text-md">{item.description}</Text>
-                          <Text
-                            className="text-lg font-bold"
-                            style={{color: COLORS.wallet}}>
-                            Price : {item.price}
-                          </Text>
+
+                          <View className="flex flex-row">
+                            <Text
+                              className="flex-none text-md font-bold"
+                              style={{color: COLORS.wallet}}>
+                              Service Type :
+                            </Text>
+                            <Text className="flex-initial ml-2 text-md font-bold break-words">
+                              {item.type}
+                            </Text>
+                          </View>
+                          <View className="flex flex-row">
+                            <Text
+                              className="flex-none text-md font-bold"
+                              style={{color: COLORS.wallet}}>
+                              Price :
+                            </Text>
+                            <Text className="flex-initial ml-2 text-md font-bold break-words">
+                              {item.price}
+                            </Text>
+                          </View>
+                          {item.location ? (
+                            <View className="flex flex-row">
+                              <Text
+                                className="flex-none text-md font-bold"
+                                style={{color: COLORS.wallet}}>
+                                Location :
+                              </Text>
+                              <Text className="flex-initial ml-2 text-md font-bold break-words">
+                                {item.location}
+                              </Text>
+                            </View>
+                          ) : null}
                         </View>
                       </DefaultCard>
                     </ScrollView>
@@ -140,6 +162,8 @@ const EditHandle = () => {
         <View className="space-y-5">
           <View className="flex flex-col space-y-4">
             <CustomTextInput placeholder={'Service name'} />
+            <CustomTextInput placeholder={'Service Type'} />
+            <CustomTextInput placeholder={'Service Location'} />
             <CustomTextInput placeholder={'Price'} />
             <CustomTextInput
               placeholder={'Description'}

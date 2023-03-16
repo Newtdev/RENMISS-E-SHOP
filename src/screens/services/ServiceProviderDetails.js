@@ -1,6 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Image, Pressable, ScrollView, Text, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {DefaultCard} from '../../components/Cards';
 import ScreenWrapper from '../../components/ScreenWrapper';
 import Image1 from '../../assets/images/1.jpeg';
@@ -11,54 +18,94 @@ import Icon, {Icons} from '../../components/Icons';
 import {IconButton} from 'react-native-paper';
 import RatingStars from '../../components/Rating';
 import AccordionSection from '../../components/Accordions';
-import ModalWrapper from '../../components/Modals';
-import {TextField} from '../../components/Inputs';
+import {CustomTextInput, TextField} from '../../components/Inputs';
+import {ModalWrapper} from '../../components/Modals';
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    image: Image1,
-    name: 'Renmiss Limited',
-    review: 'Explore to get the best designer for your work.',
-    rating: 3.5,
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    image: Image2,
-    name: 'Tratrust Limited',
-    review: 'Get all your travelling document easily at your comfort.',
-    rating: 4.0,
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    image: Image3,
-    name: 'Bellocare Foundation',
-    review: 'Explore to get the best designer for your work.',
-    rating: 1.5,
-  },
-];
-const SERVICES_DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Renmiss Limited',
-    description: 'Explore to get the best designer for your work.',
-    price: 3.5,
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Tratrust Limited',
-    description: 'Get all your travelling document easily at your comfort.',
-    price: 4.0,
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Bellocare Foundation',
-    description: 'Explore to get the best designer for your work.',
-    price: 1.5,
-  },
-];
+const data = {
+  user: '64006f236bba90697cde788a',
+  coverMedia: Image1,
+  name: 'vickycarwash',
+  description:
+    'Feel free to hire me to get the best graphics for your brand. I am tested and trusted all over the world.',
+  category: '6401fc0dd14d03eae16a3abe',
+  status: 'ACTIVE',
+  services: [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      name: 'Renmiss Limited',
+      description: 'Explore to get the best designer for your work.',
+      price: 3500,
+      type: 'Workshop',
+      location: 'no 12 Sambrerio crescent off limpopo street',
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      name: 'Tratrust Limited',
+      description: 'Get all your travelling document easily at your comfort.',
+      price: 4000,
+      type: 'Mobile',
+      location: '',
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      name: 'Bellocare Foundation',
+      description: 'Explore to get the best designer for your work.',
+      price: 1395,
+      type: 'Hybrid',
+      location: 'no 12 Sambrerio crescent off limpopo street',
+    },
+  ],
+  ratings: [
+    {
+      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      avatar: Image1,
+      name: 'Renmiss Limited',
+      comment: 'Explore to get the best designer for your work.',
+      rating: 3.5,
+    },
+    {
+      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+      avatar: Image2,
+      name: 'Tratrust Limited',
+      comment: 'Excellent',
+      rating: 4.0,
+    },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      avatar: Image3,
+      name: 'Bellocare Foundation',
+      comment: 'Explore to get the best designer for your work.',
+      rating: 1.5,
+    },
+  ],
+  createdAt: '2023-03-08T10:06:36.456Z',
+  updatedAt: '2023-03-08T10:06:36.456Z',
+  id: '64085e2c7952876bac28eb39',
+};
 
-const ServiceProviderDetails = ({navigation}) => {
+const styles = StyleSheet.create({
+  serviceHandleImageContainer: {
+    borderTopColor: COLORS.social,
+    borderBottomColor: COLORS.shop,
+    borderLeftColor: COLORS.wallet,
+    borderRightColor: COLORS.wallet,
+    borderRadius: 50,
+    borderWidth: 10,
+    height: 95,
+    width: 95,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  serviceHandleImage: {
+    // borderColor: COLORS.social,
+    borderRadius: 50,
+    borderWidth: 2,
+    height: 90,
+    width: 90,
+  },
+});
+
+const ServiceProviderDetails = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
   const handleModal = () => setModalVisible(true);
 
@@ -70,16 +117,18 @@ const ServiceProviderDetails = ({navigation}) => {
             {/* Profile card */}
             <DefaultCard bgColor={COLORS.black} txColor={COLORS.white}>
               <View className="flex-none flex-row space-x-4 w-full">
-                <View className="flex-none">
+                <View
+                  className="flex-none"
+                  style={styles.serviceHandleImageContainer}>
                   <Image
-                    source={Image1}
-                    className="rounded-full border-2 border-green-700 h-20 w-20"
+                    source={data?.coverMedia}
+                    style={styles.serviceHandleImage}
                   />
                 </View>
                 <View className="flex-initial space-y-4 justify-center">
                   <View className="flex-row space-x-1 items-center">
-                    <Text className="text-white text-xl text-center">
-                      Automobile Diagnostic Center &nbsp;
+                    <Text className="text-white text-xl text-center capitalize">
+                      {data?.name} &nbsp;
                       <Icon
                         type={Icons.Ionicons}
                         name="shield-checkmark"
@@ -124,10 +173,8 @@ const ServiceProviderDetails = ({navigation}) => {
                     />
                   </View>
                   <View className="flex-initial">
-                    <Text className="text-sm font-bold text-white text-justify tracking-tighter">
-                      {
-                        'Feel free to hire me to get the best graphics for your brand. I am tested and trusted all over the world.'
-                      }
+                    <Text className="text-sm font-bold text-white text-justify tracking-tighter normal-case">
+                      {data?.description}
                     </Text>
                   </View>
                 </View>
@@ -185,24 +232,36 @@ const ServiceProviderDetails = ({navigation}) => {
                   icon: 'tools',
                   element: (
                     <>
-                      {SERVICES_DATA?.map((item, i) => {
+                      {data?.services?.map((item, i) => {
                         return (
-                          <ScrollView key={item.id} className="mt-2">
+                          <ScrollView key={item.id} className="my-1">
                             <DefaultCard
                               bgColor={COLORS.white}
                               txColor={COLORS.black}>
                               <View className="flex flex-col justify-between font-bold space-y-3">
                                 <Text className="text-lg font-bold">
-                                  {item.title}
+                                  {item.name}
                                 </Text>
                                 <Text className="text-md">
                                   {item.description}
                                 </Text>
                                 <Text
-                                  className="text-lg font-bold"
+                                  className="text-md font-bold"
+                                  style={{color: COLORS.wallet}}>
+                                  Service Type : {item.type}
+                                </Text>
+                                <Text
+                                  className="text-md font-bold"
                                   style={{color: COLORS.wallet}}>
                                   Price : {item.price}
                                 </Text>
+                                {item.location ? (
+                                  <Text
+                                    className="text-md font-bold"
+                                    style={{color: COLORS.wallet}}>
+                                    Location : {item.location}
+                                  </Text>
+                                ) : null}
                               </View>
                             </DefaultCard>
                           </ScrollView>
@@ -215,8 +274,8 @@ const ServiceProviderDetails = ({navigation}) => {
                   title: 'Ratings and Review',
                   icon: 'star',
                   element: (
-                    <ScrollView>
-                      {DATA?.map((item, i) => {
+                    <View>
+                      {data?.ratings?.map((item, i) => {
                         return (
                           <View key={item.id} className="mt-2">
                             <DefaultCard
@@ -225,7 +284,7 @@ const ServiceProviderDetails = ({navigation}) => {
                               <View className="flex flex-row space-x-3">
                                 <View className="flex-none">
                                   <Image
-                                    source={Image1}
+                                    source={item.avatar}
                                     className="rounded-full border border-blue-900 h-8 w-8"
                                   />
                                 </View>
@@ -234,7 +293,7 @@ const ServiceProviderDetails = ({navigation}) => {
                                     {item.name}
                                   </Text>
                                   <Text className="text-md text-justify tracking-tighter">
-                                    {item.review}
+                                    {item.comment}
                                   </Text>
                                   <Text
                                     className="text-sm font-bold"
@@ -252,7 +311,7 @@ const ServiceProviderDetails = ({navigation}) => {
                           </View>
                         );
                       })}
-                    </ScrollView>
+                    </View>
                   ),
                 },
               ]}
@@ -263,7 +322,6 @@ const ServiceProviderDetails = ({navigation}) => {
 
       <ModalWrapper
         showModal={modalVisible}
-        materialCommunityIcon={''}
         okElement={
           <Pressable>
             <Text style={{color: COLORS.wallet, fontWeight: '500'}}>Post</Text>
@@ -279,13 +337,13 @@ const ServiceProviderDetails = ({navigation}) => {
             <RatingStars size={25} isDisabled={false} />
           </View>
           <View>
-            <Text className=" text-center">
+            <Text className="text-center">
               Please rate and review this product and recommend it to othe
               users.
             </Text>
           </View>
           <View>
-            <TextField placeholder={'Add a review'} />
+            <CustomTextInput placeholder={'Add a review'} />
           </View>
         </View>
       </ModalWrapper>

@@ -15,6 +15,15 @@ const CardWrapper = ({children, banner}) => {
     </View>
   );
 };
+export const ServiceProviderCard = ({children, banner}) => {
+  return (
+    <View className="h-fit w-[48%]">
+      <View className="flex flex-1 justify-start p-3 bg-white rounded-2xl mb-3">
+        {children}
+      </View>
+    </View>
+  );
+};
 export const DefaultCard = ({children, bgColor, txColor}) => {
   return (
     <View
