@@ -13,7 +13,7 @@ import ShopDetails from './src/screens/shop';
 import Shops from './src/screens/shops';
 import Product from './src/screens/product';
 import WishList from './src/screens/wishlist';
-import Invoices from './src/screens/invoices';
+// import Invoices from './src/screens/invoices';
 import ServicesCategory from './src/screens/services/ServicesCategory';
 import CreateShop from './src/screens/createshop';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -34,7 +34,7 @@ import ActiveWallet from './src/assets/activeWallet.svg';
 import HeaderWrapper from './src/components/HeaderWrapper';
 
 import Back from './src/assets/nine.png';
-import BackButton, { EditButton } from './src/components/Buttons';
+import BackButton, {EditButton} from './src/components/Buttons';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

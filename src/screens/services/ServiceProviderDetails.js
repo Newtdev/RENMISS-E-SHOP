@@ -23,7 +23,10 @@ import {ModalWrapper} from '../../components/Modals';
 
 const data = {
   user: '64006f236bba90697cde788a',
-  coverMedia: Image1,
+  coverMedia: {
+    media: Image1,
+    public_id: 'LnVtujb2SPirytVwrUA3FBlTeKcEGbsu',
+  },
   name: 'vickycarwash',
   description:
     'Feel free to hire me to get the best graphics for your brand. I am tested and trusted all over the world.',
@@ -121,7 +124,7 @@ const ServiceProviderDetails = () => {
                   className="flex-none"
                   style={styles.serviceHandleImageContainer}>
                   <Image
-                    source={data?.coverMedia}
+                    source={data?.coverMedia.media}
                     style={styles.serviceHandleImage}
                   />
                 </View>

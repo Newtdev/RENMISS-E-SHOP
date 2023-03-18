@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable, View} from 'react-native';
-import {Button} from 'react-native-paper';
+import {Button, IconButton, SegmentedButtons} from 'react-native-paper';
 import {COLORS} from '../utils/Colors';
 import Icon, {Icons} from './Icons';
 
@@ -37,5 +37,34 @@ export const SubmitButton = ({children, name, onPress}) => {
 // export const IconButton = () => {
 //   return <Icon type={Icons?.FontAwesome5} name="pen" color={COLORS.white} />;
 // };
+
+export const Tab = ({value, setValue, data}) => {
+  // const style = {borderRadius: 5, color: 'red'};
+  return (
+    <SegmentedButtons value={value} onValueChange={setValue} buttons={data} />
+  );
+};
+export const CustomButton = ({
+  name,
+  fn,
+  style = 'w-full mx-auto py-2 rounded-[10px] font-bold',
+  bg = COLORS.shop,
+  icon,
+  disablebtn,
+}) => (
+  <Button
+    mode="contained"
+    disabled={disablebtn}
+    icon={icon}
+    style={{backgroundColor: bg}}
+    className={style}
+    onPress={fn}>
+    {name}
+  </Button>
+);
+
+export const IconBtn = ({name, color = COLORS.shop, size = 20, onPress}) => (
+  <IconButton icon={name} iconColor={color} size={size} onPress={onPress} />
+);
 
 export default BackButton;

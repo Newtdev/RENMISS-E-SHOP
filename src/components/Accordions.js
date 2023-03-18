@@ -60,4 +60,18 @@ const AccordionSection = ({data}) => {
   );
 };
 
+export const SingleAccordion = ({children, handlePress, expanded}) => {
+  return (
+    <List.Section>
+      <List.Accordion
+        title="Product variation"
+        titleStyle={{color: COLORS.black, fontSize: 14}}
+        expanded={expanded}
+        onPress={handlePress}>
+        {children}
+      </List.Accordion>
+    </List.Section>
+  );
+};
+
 export default AccordionSection;

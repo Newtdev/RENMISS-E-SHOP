@@ -26,7 +26,6 @@ import Product from '../screens/product';
 import WishList from '../screens/wishlist';
 import CreateShop from '../screens/createshop';
 import Receipt from '../screens/receipt';
-import Invoices from '../screens/invoices';
 import InvoiceDetails from '../screens/invoice-details/InvoiceDetails';
 import ServicesCategory from '../screens/services/ServicesCategory';
 import {COLORS} from '../utils/Colors';
@@ -35,6 +34,9 @@ import ServiceProviders from '../screens/services/ServiceProviders';
 import ServiceProviderDetails from '../screens/services/ServiceProviderDetails';
 import EditHandle from '../screens/services/EditHandle';
 import CreateHandle from '../screens/services/CreateHandle';
+import Invoices from '../screens/invoices/Invoice';
+import MyShop from '../screens/myShop';
+import CreateProduct from '../screens/create-product';
 
 const Tab = createBottomTabNavigator();
 
@@ -233,7 +235,9 @@ const CustomNavigation = () => {
       <Screen name="Shop" component={Shops} />
       <Screen name="Product" component={Product} />
       <Screen name="Wishlist" component={WishList} />
+      <Screen name="Create-product" component={CreateProduct} />
       <Screen name="invoice-management" component={Invoices} />
+      <Screen name="my-shop" component={MyShop} />
       <Screen
         name="ServicesCategory"
         component={ServicesCategory}
