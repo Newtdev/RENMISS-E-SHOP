@@ -75,6 +75,7 @@ const DynamicInput = ({
         value={value}
         placeholder={placeholder}
         className={style}
+        placeholderTextColor={COLORS?.darkOverlayColor}
       />
       {error && touched ? (
         <Text className="mt-1 ml-2 text-xs text-red-600">{error}</Text>
@@ -240,7 +241,7 @@ const CreateProduct = () => {
                     ))}
                     <View className="mt-auto flex flex-row justify-between">
                       <CustomButton
-                        style="w-36 py-0 px-0 rounded"
+                        style="w-36 py-0 px-0 rounded text-black"
                         name="Add option"
                         icon="plus"
                         bg={COLORS.gray}
@@ -260,7 +261,7 @@ const CreateProduct = () => {
               )}
             />
             <View className="w-full flex flex-row items-center">
-              {!single ? (
+              {single.length < 1 ? (
                 <ImageUploadFunction
                   name="Primary Image"
                   values={Formik.values.imageUrl}

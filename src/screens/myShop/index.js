@@ -1,39 +1,90 @@
-import React from 'react';
-import {TouchableOpacity, View, Image, Text} from 'react-native';
+import React, {useState} from 'react';
+import {TouchableOpacity, View, Image, Text, Pressable} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon, {Icons} from '../../components/Icons';
-import {CustomeFlatList, ScreenWrapper} from '../../sharedcomponent';
+import {
+  CustomeFlatList,
+  Loader,
+  PageLoader,
+  ScreenWrapper,
+} from '../../sharedcomponent';
 import Images from '../../assets/shopImage.png';
 import BgFour from './../../assets/five.jpg';
-// import Product from '../../../assets/product.png';
 import Product from '../../assets/product.png';
 import {ShopImageHeader} from '../../components/HeaderWrapper';
 import {useNavigation} from '@react-navigation/native';
 import {DIMENSION} from '../../utils/Constant';
+import ModalWrapper from 'components/Modals';
+import {COLORS} from 'utils/Colors';
 
 const ProductActions = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
   const data = [
     {
       id: 1,
       name: 'pencil',
       color: '#000000',
       family: Icons.MaterialCommunityIcons,
+      onSubmit: () => console.log('Edit'),
     },
-    {id: 2, name: 'trash', color: '#b70000', family: Icons.Foundation},
+    {
+      id: 2,
+      name: 'trash',
+      color: '#b70000',
+      family: Icons.Foundation,
+      onSubmit: () => setModalVisible(!modalVisible),
+    },
   ];
+  const confirmDelete = () => {
+    setModalVisible(false);
+    setShowLoader(true);
+  };
   return (
     <>
-      {data.map(({name, family, color}) => {
+      <PageLoader submitting={showLoader}>
+        <Loader />
+      </PageLoader>
+      {data?.map(({name, family, color, onSubmit, id}) => {
         return (
           <TouchableOpacity
-            onPress={() => console.log('sdosoid')}
-            className="h-[65px] w-[61px] bg-white rounded-lg m-1">
+            onPress={onSubmit}
+            className="h-[65px] w-[61px] bg-white rounded-lg m-1"
+            key={id}>
             <View className="h-10 m-auto w-10 bg-[#D9D9D9] rounded-full flex flex-row items-center justify-center">
               <Icon name={name} type={family} color={color} size={22} />
             </View>
           </TouchableOpacity>
         );
       })}
+
+      <ModalWrapper
+        showModal={modalVisible}
+        materialCommunityIcon={'delete'}
+        okElement={
+          <Pressable onPress={confirmDelete}>
+            <Text style={{color: COLORS.wallet, fontWeight: '500'}}>Yes</Text>
+          </Pressable>
+        }
+        cancelElement={
+          <Pressable onPress={() => setModalVisible(false)}>
+            <Text style={{color: COLORS.shop, fontWeight: '500'}}>Cancel</Text>
+          </Pressable>
+        }>
+        <View className="space-y-5">
+          <View>
+            <Text className="text-center text-base font-bold">
+              Are you sure you want to delete this product
+            </Text>
+          </View>
+          <View>
+            <Text className="text-center">
+              Please rate and review this product and recommend it to othe
+              users.
+            </Text>
+          </View>
+        </View>
+      </ModalWrapper>
     </>
   );
 };
@@ -73,7 +124,7 @@ const shopData = [
         size={54}
       />
     ),
-    link: 'manage-invoice',
+    link: 'invoice-management',
   },
   {
     id: 2,
@@ -81,7 +132,7 @@ const shopData = [
     icon: (
       <Icon name="addfile" type={Icons?.AntDesign} color="#b70000" size={54} />
     ),
-    link: 'create-invoice',
+    link: 'Create-invoice',
   },
 
   {

@@ -37,6 +37,7 @@ import CreateHandle from '../screens/services/CreateHandle';
 import Invoices from '../screens/invoices/Invoice';
 import MyShop from '../screens/myShop';
 import CreateProduct from '../screens/create-product';
+import CreateInvoice from 'screens/create-invoice';
 
 const Tab = createBottomTabNavigator();
 
@@ -236,6 +237,7 @@ const CustomNavigation = () => {
       <Screen name="Product" component={Product} />
       <Screen name="Wishlist" component={WishList} />
       <Screen name="Create-product" component={CreateProduct} />
+      <Screen name="Create-invoice" component={CreateInvoice} />
       <Screen name="invoice-management" component={Invoices} />
       <Screen name="my-shop" component={MyShop} />
       <Screen

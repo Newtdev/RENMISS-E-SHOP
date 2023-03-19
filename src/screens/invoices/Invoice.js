@@ -35,7 +35,7 @@ const InvoiceList = ({item}) => {
 };
 
 const Invoices = () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('pending');
   const buttonData = [
     {
       value: 'pending',
