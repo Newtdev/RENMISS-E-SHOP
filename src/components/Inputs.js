@@ -26,15 +26,20 @@ export const CustomSelectDropdown = ({
   touched,
   search,
   onSelect,
+  defaultButtonText,
+  label,
 }) => {
   return (
     <View className="my-2">
+      {label ? <Text className="ml-2 text-xs">{label}</Text> : null}
+
       <SelectDropdown
         data={data}
         onSelect={onSelect}
         // onSelect={(selectedItem, index) => {
         //   console.log(selectedItem, index);
         // }}
+        defaultButtonText={defaultButtonText}
         buttonTextAfterSelection={(selectedItem, index) => {
           // text represented after item is selected
           // if data array is an array of objects then return selectedItem.property to render after item is selected
@@ -112,9 +117,13 @@ export const CustomTextInput = ({
   onBlur,
   maxLength,
   keyboardType,
+  label,
+  rightIcon,
+  leftIcon,
 }) => {
   return (
     <View className="my-2">
+      {label ? <Text className="ml-2 text-xs">{label}</Text> : null}
       <TextInput
         style={{
           height: multiline ? 100 : 57,

@@ -1,5 +1,6 @@
 export const COLORS = {
   social: '#3A7700',
+  servicebadge: '#0050AF',
   wallet: '#003356',
   shop: '#B70000',
   white: '#FFFFFF',

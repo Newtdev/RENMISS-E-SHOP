@@ -3,6 +3,7 @@ import React from 'react';
 import {useFormik} from 'formik';
 import {nanoid} from 'nanoid';
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -23,68 +24,49 @@ import ImageCropPicker from 'react-native-image-crop-picker';
 import Upload from '../../assets/upload.png';
 import {DefaultCard} from '../../components/Cards';
 import ModalWrapper from '../../components/Modals';
+import CustomSnackbar from '../../components/Snackbar';
 
-// const SERVICES_DATA = [
-//   {
-//     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-//     title: 'Renmiss Limited',
-//     description: 'Explore to get the best designer for your work.',
-//     price: 3.5,
-//     type: 'Workshop',
-//     location: 'no 12 Sambrerio crescent off limpopo street',
-//   },
-//   {
-//     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-//     title: 'Tratrust Limited',
-//     description: 'Get all your travelling document easily at your comfort.',
-//     price: 4.0,
-//     type: 'Mobile',
-//     location: '',
-//   },
-//   {
-//     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-//     title: 'Bellocare Foundation',
-//     description: 'Explore to get the best designer for your work.',
-//     price: 1.5,
-//     type: 'Hybrid',
-//     location: 'no 12 Sambrerio crescent off limpopo street',
-//   },
-// ];
-
-const SERVICES_DATA = [];
+const SERVICE_TYPE = ['Mobile', 'Workshop', 'Hybrid'];
 
 const CreateHandle = () => {
   //   const dispatch = useDispatch();
   //   const showModal = useSelector(show);
   //   const loading = useSelector(request);
 
+  const [serviceData, setServiceData] = React.useState([]);
+  const [serviceCategory, setServiceCategory] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
-  const categoryList = [];
-  const categorys = [
-    {
-      name: 'Web design',
-      createdAt: '2023-03-03T13:54:21.655Z',
-      updatedAt: '2023-03-03T13:54:21.655Z',
-      id: '6401fc0dd14d03eae16a3abe1',
-    },
-    {
-      name: 'Plumbing Service',
-      createdAt: '2023-03-03T13:54:21.655Z',
-      updatedAt: '2023-03-03T13:54:21.655Z',
-      id: '6401fc0dd14d03eae16a3abe2',
-    },
-    {
-      name: 'Automobile Service',
-      createdAt: '2023-03-03T13:54:21.655Z',
-      updatedAt: '2023-03-03T13:54:21.655Z',
-      id: '6401fc0dd14d03eae16a3abe',
-    },
-  ];
-  categorys.map((item, i) => {
-    categoryList.push(item.name);
-  });
+  const [snackbarVisible, setSnackbarVisible] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState('');
+  const onDismissSnackBar = () => setSnackbarVisible(false);
+  const [createHandle, setCreateHandle] = React.useState(false);
+  const [addServices, setAddServices] = React.useState(false);
 
-  const SERVICE_TYPE = ['Mobile', 'Workshop', 'Hybrid'];
+  React.useEffect(() => {
+    const categories = [
+      {
+        name: 'Web design',
+        createdAt: '2023-03-03T13:54:21.655Z',
+        updatedAt: '2023-03-03T13:54:21.655Z',
+        id: '6401fc0dd14d03eae16a3abe1',
+      },
+      {
+        name: 'Plumbing Service',
+        createdAt: '2023-03-03T13:54:21.655Z',
+        updatedAt: '2023-03-03T13:54:21.655Z',
+        id: '6401fc0dd14d03eae16a3abe2',
+      },
+      {
+        name: 'Automobile Service',
+        createdAt: '2023-03-03T13:54:21.655Z',
+        updatedAt: '2023-03-03T13:54:21.655Z',
+        id: '6401fc0dd14d03eae16a3abe',
+      },
+    ];
+    categories.map((item, i) => {
+      setServiceCategory(current => [...current, item.name]);
+    });
+  }, []);
 
   const {
     handleChange,
@@ -97,6 +79,7 @@ const CreateHandle = () => {
     setFieldValue,
     isSubmitting,
     setSubmitting,
+    resetForm,
   } = useFormik({
     initialValues: {
       handleImage: '',
@@ -113,42 +96,90 @@ const CreateHandle = () => {
     validationSchema: CreateHandleSchema,
     onSubmit: values => {
       setSubmitting(true);
-      //   dispatch(active());
-      console.log('Okay');
-      console.log({...values, idempotentKey: nanoid(32)});
+      //   console.log({...values, idempotentKey: nanoid(32)});
+      switch (true) {
+        case addServices:
+          let data = {
+            id: nanoid(32),
+            name: values.serviceName,
+            price: values.servicePrice,
+            description: values.serviceDescription,
+            type: values.serviceType,
+            location: values.serviceLocation,
+          };
 
-      const handleObject = {
-        name: values.handleName,
-        description: values.handleDescription,
-        category: values.handleCategory,
-        services: SERVICES_DATA,
-      };
+          setServiceData([...serviceData, data]);
+          setModalVisible(false);
+          resetFormData();
 
-      console.log(handleObject);
+          console.log(serviceData);
+          break;
+        case createHandle:
+          //   Pass handleObject to the API
+          const handleObject = {
+            coverMedia: values.handleImage,
+            name: values.handleName,
+            description: values.handleDescription,
+            category: values.handleCategory,
+            services: serviceData,
+          };
+          setModalVisible(false);
+          setSnackbarVisible(true);
+          setSnackbarMessage('Handle Created Successfully!');
+          resetFormData();
+          break;
+        default:
+          break;
+      }
     },
   });
 
-  const addService = () => {
-    console.log('Clicked');
-    alert(JSON.stringify(values, null, 2));
-
-    let data = {
-      name: values.serviceName,
-      price: values.servicePrice,
-      description: values.serviceDescription,
-      type: values.serviceType,
-      location: values.serviceLocation,
-    };
-    SERVICES_DATA.push(data);
-    console.log(SERVICES_DATA);
-    setModalVisible(false);
-    setFieldValue({
-      serviceName: '',
-      serviceType: '',
-      serviceLocation: '',
-      serviceDescription: '',
-      servicePrice: '',
+  const resetFormData = () => {
+    resetForm({
+      values: {
+        handleName: values.handleName,
+        handleDescription: values.handleDescription,
+        workExperience: values.workExperience,
+        handleCategory: values.handleCategory,
+        serviceName: ' ',
+        serviceType: ' ',
+        serviceLocation: ' ',
+        serviceDescription: ' ',
+        servicePrice: ' ',
+      },
     });
+  };
+
+  const addService = () => {
+    setAddServices(true);
+    setCreateHandle(false);
+    handleSubmit();
+  };
+
+  const handleCreate = () => {
+    if (
+      values.handleName &&
+      values.handleCategory &&
+      values.handleDescription &&
+      values.workExperience &&
+      serviceData.length === 0
+    ) {
+      Alert.alert(
+        'You cannot create an handle without adding at least one service',
+      );
+    } else {
+      setAddServices(false);
+      setCreateHandle(true);
+      handleSubmit();
+    }
+  };
+
+  const removeService = i => {
+    resetFormData();
+    let serviceD = serviceData?.filter((item, index) => {
+      return index !== i;
+    });
+    setServiceData(serviceD);
   };
 
   const handleChoosePhoto = () => {
@@ -158,7 +189,7 @@ const CreateHandle = () => {
       cropping: true,
     })
       .then(image => {
-        setFieldValue('imageURL', image);
+        setFieldValue('handleImage', image.sourceURL);
       })
       .catch(err => console.log(err));
   };
@@ -167,6 +198,17 @@ const CreateHandle = () => {
     <>
       <ScreenWrapper>
         <SafeAreaView>
+          <CustomSnackbar
+            visible={snackbarVisible}
+            onDismissSnackBar={onDismissSnackBar}
+            message={snackbarMessage}
+            action={{
+              label: 'Done',
+              onPress: () => {
+                onDismissSnackBar;
+              },
+            }}
+          />
           <KeyboardAvoidingView
             keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : 50}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -184,63 +226,72 @@ const CreateHandle = () => {
                 <View>
                   <View className="mx-auto my-3 ">
                     <Pressable
-                      className="h-28 w-36 bg-white rounded-lg flex flex-col items-center justify-center p-3"
+                      className={
+                        errors.handleImage
+                          ? 'relative h-32 w-32 bg-white rounded-full items-center justify-center p-2 border border-red-800'
+                          : 'relative h-32 w-32 bg-white rounded-full items-center justify-center p-2'
+                      }
                       onPress={handleChoosePhoto}>
-                      {values?.imageURL?.banner ? (
+                      {!values?.handleImage ? (
+                        <>
+                          <Image source={Upload} resizeMode="cover" />
+                          <Text className="text-[10px] mt-2 font-bold">
+                            Add Handle Image
+                          </Text>
+                          <View className="absolute bottom-1 right-2 bg-slate-300 rounded-full">
+                            <Icon
+                              type={Icons.MaterialCommunityIcons}
+                              name="plus"
+                            />
+                          </View>
+                        </>
+                      ) : (
                         <Image
                           source={{
-                            uri: `${values?.imageURL}`,
+                            uri: `${values?.handleImage}`,
                           }}
-                          className=" h-16 w-24"
+                          className=" h-32 w-32 rounded-full"
                           resizeMode="cover"
                         />
-                      ) : null}
-                      {!values?.imageURL ? (
-                        <Image source={Upload} resizeMode="cover" />
-                      ) : null}
-                      <Text className="text-[10px] mt-2 font-bold">
-                        Add Handle Image
-                      </Text>
+                      )}
                     </Pressable>
                   </View>
 
                   <CustomTextInput
                     placeholder={'Handle Name'}
                     type="text"
-                    value={values?.handleName}
                     onChangeText={handleChange('handleName')}
                     error={errors?.handleName}
                     touched={touched?.handleName}
                     autoFocus={true}
                   />
                   <CustomTextInput
-                    placeholder={'Handle Description'}
+                    placeholder={'Handler Working Experience'}
                     type="text"
-                    value={values?.handleDescription}
-                    onChangeText={handleChange('handleDescription')}
-                    error={errors?.handleDescription}
-                    touched={touched?.handleDescription}
-                    multiline={true}
-                    maxLength={50}
-                  />
-                  <CustomTextInput
-                    placeholder={'Provider Working Experience'}
-                    type="text"
-                    value={values?.workExperience}
                     onChangeText={handleChange('workExperience')}
                     error={errors?.workExperience}
                     touched={touched?.workExperience}
                   />
                   <CustomSelectDropdown
-                    data={categoryList}
+                    data={serviceCategory}
                     search={true}
                     onSelect={handleChange('handleCategory')}
+                    defaultButtonText={'Select category'}
                     // onSelect={(selectedItem, index) => {
                     //   handleChange('handleCategory');
                     //   console.log(selectedItem, index);
                     // }}
                     error={errors?.handleCategory}
                     touched={touched?.handleCategory}
+                  />
+                  <CustomTextInput
+                    placeholder={'Handle Description'}
+                    type="text"
+                    onChangeText={handleChange('handleDescription')}
+                    error={errors?.handleDescription}
+                    touched={touched?.handleDescription}
+                    multiline={true}
+                    maxLength={50}
                   />
                 </View>
 
@@ -267,7 +318,7 @@ const CreateHandle = () => {
                     </Pressable>
                   </View>
 
-                  {SERVICES_DATA?.map((item, i) => {
+                  {serviceData?.map((item, i) => {
                     return (
                       <ScrollView key={item.id} className="mt-2">
                         <DefaultCard
@@ -278,10 +329,10 @@ const CreateHandle = () => {
                               <Text className="text-lg font-bold">
                                 {item.name}
                               </Text>
-                              <Pressable onPress={() => setModalVisible(true)}>
+                              <Pressable onPress={() => removeService(i)}>
                                 <Icon
                                   type={Icons.MaterialCommunityIcons}
-                                  name="pencil"
+                                  name="close"
                                   size={20}
                                 />
                               </Pressable>
@@ -328,13 +379,14 @@ const CreateHandle = () => {
                 </View>
               </ScrollView>
               <View className="w-full">
-                <SubmitButton onPress={handleSubmit} name="Done" />
+                <SubmitButton onPress={handleCreate} name="Create" />
               </View>
             </View>
           </KeyboardAvoidingView>
         </SafeAreaView>
       </ScreenWrapper>
 
+      {/* Modal to add services */}
       <ModalWrapper
         showModal={modalVisible}
         okElement={
@@ -352,7 +404,6 @@ const CreateHandle = () => {
             <CustomTextInput
               placeholder={'Service name'}
               type="text"
-              value={values?.serviceName}
               onChangeText={handleChange('serviceName')}
               error={errors?.serviceName}
               touched={touched?.serviceName}
@@ -360,6 +411,7 @@ const CreateHandle = () => {
             <CustomSelectDropdown
               data={SERVICE_TYPE}
               search={''}
+              defaultButtonText={'Select service type'}
               onSelect={handleChange('serviceType')}
               // onSelect={(selectedItem, index) => {
               //   handleChange('handleCategory');
@@ -371,7 +423,6 @@ const CreateHandle = () => {
             <CustomTextInput
               placeholder={'Service Location'}
               type="text"
-              value={values?.serviceLocation}
               onChangeText={handleChange('serviceLocation')}
               error={errors?.serviceLocation}
               touched={touched?.serviceLocation}
@@ -379,15 +430,13 @@ const CreateHandle = () => {
             <CustomTextInput
               placeholder={'Service Price'}
               type="decimal"
-              value={values?.servicePrice}
               onChangeText={handleChange('servicePrice')}
               error={errors?.servicePrice}
               touched={touched?.servicePrice}
             />
             <CustomTextInput
-              placeholder={'Service aDescription'}
+              placeholder={'Service Description'}
               type="text"
-              value={values?.serviceDescription}
               onChangeText={handleChange('serviceDescription')}
               error={errors?.serviceDescription}
               touched={touched?.serviceDescription}

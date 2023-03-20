@@ -18,12 +18,16 @@ import Icon, {Icons} from '../../components/Icons';
 import {IconButton} from 'react-native-paper';
 import RatingStars from '../../components/Rating';
 import AccordionSection from '../../components/Accordions';
-import {CustomTextInput, TextField} from '../../components/Inputs';
+import {CustomTextInput} from '../../components/Inputs';
 import {ModalWrapper} from '../../components/Modals';
+import {useFormik} from 'formik';
 
 const data = {
   user: '64006f236bba90697cde788a',
-  coverMedia: Image1,
+  coverMedia: {
+    media: Image1,
+    public_id: 'LnVtujb2SPirytVwrUA3FBlTeKcEGbsu',
+  },
   name: 'vickycarwash',
   description:
     'Feel free to hire me to get the best graphics for your brand. I am tested and trusted all over the world.',
@@ -107,7 +111,49 @@ const styles = StyleSheet.create({
 
 const ServiceProviderDetails = () => {
   const [modalVisible, setModalVisible] = React.useState(false);
-  const handleModal = () => setModalVisible(true);
+  const [ratings, setRating] = React.useState();
+  const [comment, setComment] = React.useState();
+
+  const {handleChange, handleSubmit, setSubmitting} = useFormik({
+    initialValues: {
+      ratingComment: '',
+    },
+    onSubmit: values => {
+      setSubmitting(true);
+      //   dispatch(active());
+
+      //   Pass handleRatingObject to API data
+      const handleRatingObject = {
+        rating: ratings,
+        comment: values.ratingComment ? values.ratingComment : comment,
+      };
+
+      console.log(handleRatingObject);
+    },
+  });
+
+  const ratingCount = rating => {
+    setRating(rating);
+    switch (rating) {
+      case 1:
+        setComment('Fear');
+        break;
+      case 2:
+        setComment('Poor');
+        break;
+      case 3:
+        setComment('Good');
+        break;
+      case 4:
+        setComment('Very Good');
+        break;
+      case 5:
+        setComment('Excellent');
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <>
@@ -121,7 +167,7 @@ const ServiceProviderDetails = () => {
                   className="flex-none"
                   style={styles.serviceHandleImageContainer}>
                   <Image
-                    source={data?.coverMedia}
+                    source={data?.coverMedia.media}
                     style={styles.serviceHandleImage}
                   />
                 </View>
@@ -132,33 +178,11 @@ const ServiceProviderDetails = () => {
                       <Icon
                         type={Icons.Ionicons}
                         name="shield-checkmark"
-                        color={COLORS.social}
+                        color={COLORS.servicebadge}
                         size={25}
                       />
                     </Text>
                   </View>
-                  {/* <View className="flex flex-row w-full">
-                    <Icon
-                      type={Icons.MaterialIcons}
-                      name="email"
-                      color={COLORS.white}
-                      size={16}
-                    />
-                    <Text className="text-xs font-bold text-white">
-                      {'hassanabubakar@renmiss.ng'}
-                    </Text>
-                  </View>
-                  <View className="flex flex-row space-x-2 w-full">
-                    <Icon
-                      type={Icons.MaterialIcons}
-                      name="phone"
-                      color={COLORS.white}
-                      size={16}
-                    />
-                    <Text className="text-xs font-bold text-white">
-                      {'08068033360'}
-                    </Text>
-                  </View> */}
                 </View>
               </View>
 
@@ -245,22 +269,37 @@ const ServiceProviderDetails = () => {
                                 <Text className="text-md">
                                   {item.description}
                                 </Text>
-                                <Text
-                                  className="text-md font-bold"
-                                  style={{color: COLORS.wallet}}>
-                                  Service Type : {item.type}
-                                </Text>
-                                <Text
-                                  className="text-md font-bold"
-                                  style={{color: COLORS.wallet}}>
-                                  Price : {item.price}
-                                </Text>
-                                {item.location ? (
+                                <View className="flex flex-row">
                                   <Text
-                                    className="text-md font-bold"
+                                    className="flex-none text-md font-bold"
                                     style={{color: COLORS.wallet}}>
-                                    Location : {item.location}
+                                    Service Type :
                                   </Text>
+                                  <Text className="flex-initial ml-2 text-md font-bold break-words">
+                                    {item.type}
+                                  </Text>
+                                </View>
+                                <View className="flex flex-row">
+                                  <Text
+                                    className="flex-none text-md font-bold"
+                                    style={{color: COLORS.wallet}}>
+                                    Price :
+                                  </Text>
+                                  <Text className="flex-initial ml-2 text-md font-bold break-words">
+                                    {item.price}
+                                  </Text>
+                                </View>
+                                {item.location ? (
+                                  <View className="flex flex-row">
+                                    <Text
+                                      className="flex-none text-md font-bold"
+                                      style={{color: COLORS.wallet}}>
+                                      Location :
+                                    </Text>
+                                    <Text className="flex-initial ml-2 text-md font-bold break-words">
+                                      {item.location}
+                                    </Text>
+                                  </View>
                                 ) : null}
                               </View>
                             </DefaultCard>
@@ -285,7 +324,13 @@ const ServiceProviderDetails = () => {
                                 <View className="flex-none">
                                   <Image
                                     source={item.avatar}
-                                    className="rounded-full border border-blue-900 h-8 w-8"
+                                    style={{
+                                      borderWidth: 1,
+                                      borderColor: COLORS.wallet,
+                                      borderRadius: 50,
+                                      height: 30,
+                                      width: 30,
+                                    }}
                                   />
                                 </View>
                                 <View className="flex-initial flex-col justify-between font-bold space-y-1">
@@ -320,10 +365,11 @@ const ServiceProviderDetails = () => {
         </ScrollView>
       </ScreenWrapper>
 
+      {/* Rating Modal */}
       <ModalWrapper
         showModal={modalVisible}
         okElement={
-          <Pressable>
+          <Pressable onPress={handleSubmit}>
             <Text style={{color: COLORS.wallet, fontWeight: '500'}}>Post</Text>
           </Pressable>
         }
@@ -334,16 +380,24 @@ const ServiceProviderDetails = () => {
         }>
         <View className="space-y-5">
           <View>
-            <RatingStars size={25} isDisabled={false} />
+            <RatingStars
+              size={25}
+              isDisabled={false}
+              ratingCount={ratingCount}
+            />
           </View>
           <View>
             <Text className="text-center">
-              Please rate and review this product and recommend it to othe
-              users.
+              Please rate and add a review to this handle, also don't forget to
+              recommend others.
             </Text>
           </View>
           <View>
-            <CustomTextInput placeholder={'Add a review'} />
+            <CustomTextInput
+              placeholder={'Add a review'}
+              type="text"
+              onChangeText={handleChange('ratingComment')}
+            />
           </View>
         </View>
       </ModalWrapper>

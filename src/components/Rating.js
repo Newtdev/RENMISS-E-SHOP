@@ -2,12 +2,16 @@ import React from 'react';
 import {Button, Pressable, Text, View} from 'react-native';
 import {Rating, AirbnbRating} from 'react-native-ratings';
 
-const RatingStars = ({size, isDisabled, defaultRating, ratingComplete}) => {
-  const ratingbtn = React.useRef();
-
+const RatingStars = ({
+  size,
+  isDisabled,
+  defaultRating,
+  ratingCount,
+  showRating,
+}) => {
   function ratingCompleted(rating) {
-    console.log('Rating is: ' + rating);
-    ratingbtn.current.handleOnPress();
+    // console.log('Rating is: ' + rating);
+    ratingCount(rating);
   }
 
   return (
@@ -18,11 +22,10 @@ const RatingStars = ({size, isDisabled, defaultRating, ratingComplete}) => {
           count={5}
           defaultRating={defaultRating ? defaultRating : 0}
           size={size ? size : 15}
-          showRating={false}
+          showRating={showRating ? true : false}
           isDisabled={isDisabled}
           onFinishRating={ratingCompleted}
         />
-        <Button ref={ratingbtn} onPress={ratingComplete('Hello')} />
       </View>
       {/* <Rating
         showRating
