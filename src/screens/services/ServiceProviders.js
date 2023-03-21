@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Image, Pressable, StyleSheet, Text} from 'react-native';
+import {Image, Pressable, RefreshControl, StyleSheet, Text} from 'react-native';
 import {FlatList, View} from 'react-native';
 import CardWrapper, {ServiceProviderCard} from '../../components/Cards';
 import Image1 from '../../assets/images/1.jpeg';
@@ -10,12 +10,16 @@ import ScreenWrapper from '../../components/ScreenWrapper';
 import {COLORS} from '../../utils/Colors';
 import Icon, {Icons} from '../../components/Icons';
 import RatingStars from '../../components/Rating';
+import {SearchInput} from '../../components/Inputs';
 
 const data = {
   data: [
     {
       user: '63ee88e83f3c6cd56d596913',
-      coverMedia: Image1,
+      coverMedia: {
+        media: Image1,
+        public_id: 'LnVtujb2SPirytVwrUA3FBlTeKcEGbsu',
+      },
       name: 'thebahdman',
       description: 'this is a bahdman service',
       category: '6401fc0dd14d03eae16a3abe',
@@ -35,7 +39,10 @@ const data = {
     },
     {
       user: '63ee88e83f3c6cd56d5969133',
-      coverMedia: Image2,
+      coverMedia: {
+        media: Image2,
+        public_id: 'LnVtujb2SPirytVwrUA3FBlTeKcEGbsu',
+      },
       name: 'PamVick',
       description: 'Deals with all kinds of services',
       category: '6401fc0dd14d03eae16a3abe',
@@ -55,7 +62,10 @@ const data = {
     },
     {
       user: '63ee88e83f3c6cd56d5969143',
-      coverMedia: Image3,
+      coverMedia: {
+        media: Image3,
+        public_id: 'LnVtujb2SPirytVwrUA3FBlTeKcEGbsu',
+      },
       name: 'Plumbing Services',
       description: 'Get your plumbing work done in a jiffy',
       category: '6401fc0dd14d03eae16a3abe',
@@ -113,13 +123,39 @@ const styles = StyleSheet.create({
 });
 
 const ServiceProviders = ({navigation}) => {
+  const [searchVisible, setSearchVisible] = React.useState(false);
+
   function ratingCompleted(rating) {
     console.log('Rating in the main is: ' + rating);
   }
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   return (
     <ScreenWrapper>
+      <View className="flex flex-row justify-between">
+        <Text className="my-2">Choose Artisan</Text>
+        <Pressable onPress={() => setSearchVisible(!searchVisible)}>
+          <Icon
+            type={Icons.FontAwesome}
+            name="search"
+            color={COLORS.black}
+            size={25}
+          />
+        </Pressable>
+      </View>
+      {searchVisible ? <SearchInput placeholder="Search Category" /> : null}
       <FlatList
         data={data.data}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         renderItem={({item}) => (
           <ServiceProviderCard>
             <Pressable
@@ -127,10 +163,18 @@ const ServiceProviders = ({navigation}) => {
               <View className="flex flex-col justify-between h-full">
                 <View className="flex-1 items-center text-black space-y-2">
                   <Image
-                    source={item.coverMedia}
+                    source={item.coverMedia.media}
                     style={styles.serviceHandleImage}
                   />
-                  <Text className="font-bold capitalize">{item.name}</Text>
+                  <Text className="font-bold capitalize">
+                    {item.name}&nbsp;
+                    <Icon
+                      type={Icons.Ionicons}
+                      name="shield-checkmark"
+                      color={COLORS.servicebadge}
+                      size={16}
+                    />
+                  </Text>
                   <Text className="text-xs normal-case">
                     {item.description}
                   </Text>
@@ -143,17 +187,6 @@ const ServiceProviders = ({navigation}) => {
                     isDisabled={true}
                     ratingComplete={ratingCompleted}
                   />
-                </View>
-                <View className="flex-3 flex-row w-full">
-                  <Icon
-                    type={Icons.Ionicons}
-                    name="shield-checkmark"
-                    color={COLORS.wallet}
-                    size={16}
-                  />
-                  <Text className="text-xs font-bold capitalize">
-                    {item.status}
-                  </Text>
                 </View>
               </View>
             </Pressable>

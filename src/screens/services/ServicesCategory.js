@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {FlatList, Pressable, Text, View} from 'react-native';
+import {FlatList, Pressable, RefreshControl, Text, View} from 'react-native';
 // import ServicesCategoryCard from '../../components/ServicesCategoryCard';
 import banner from '../../assets/eight.png';
 import ScreenWrapper from '../../components/ScreenWrapper';
@@ -29,6 +29,14 @@ const data = [
 
 const ServicesCategory = ({navigation}) => {
   const [searchVisible, setSearchVisible] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
   return (
     <>
       <ScreenWrapper>
@@ -46,6 +54,10 @@ const ServicesCategory = ({navigation}) => {
         {searchVisible ? <SearchInput placeholder="Search Category" /> : null}
         <FlatList
           data={data}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+
           renderItem={({item}) => (
             <CardWrapper banner={item.image}>
               <Pressable

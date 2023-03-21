@@ -11,13 +11,21 @@ export const CreateShopSchema = Yup.object().shape({
 });
 
 export const CreateHandleSchema = Yup.object().shape({
-  // handleImage: Yup.string().required('Handle Image is required!'),
+  handleImage: Yup.string().required('Handle Image is required!'),
   handleName: Yup.string().required('Handle Name is required!'),
   handleDescription: Yup.string().required('Handle Description is required!'),
   workExperience: Yup.string().required(
     'Provider Working Experience is required!',
   ),
   handleCategory: Yup.string().required('Category is required!'),
+  serviceName: Yup.string().required('Service Name is required!'),
+  serviceType: Yup.string().required('Service Type is required!'),
+  serviceLocation: Yup.string().required('Service Location is required!'),
+  serviceDescription: Yup.string().required('Service Description is required!'),
+  servicePrice: Yup.string().required('Price is required!'),
+});
+
+export const AddServiceSchema = Yup.object().shape({
   serviceName: Yup.string().required('Service Name is required!'),
   serviceType: Yup.string().required('Service Type is required!'),
   serviceLocation: Yup.string().required('Service Location is required!'),

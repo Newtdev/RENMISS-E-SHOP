@@ -26,6 +26,7 @@ export const ModalWrapper = ({
             />
           </View>
           <View className="py-5">{children}</View>
+          <View className="flex flex-row space-x-8 absolute bottom-3 right-5">
           <View className="flex flex-row justify-end  space-x-4 pr-4">
             {okElement}
             {cancelElement}
