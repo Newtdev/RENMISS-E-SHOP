@@ -16,7 +16,7 @@ export const ModalWrapper = ({
       <View
         className=" h-full w-full flex items-center justify-center mx-auto"
         style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
-        <View className="relative bg-slate-50 rounded-3xl w-[80%] p-5">
+        <View className="relative bg-slate-50 rounded-3xl w-[80%] px-5 py-7">
           <View className="items-center">
             <Icon
               type={Icons.MaterialCommunityIcons}
@@ -27,6 +27,7 @@ export const ModalWrapper = ({
           </View>
           <View className="py-5">{children}</View>
           <View className="flex flex-row space-x-8 absolute bottom-3 right-5">
+          <View className="flex flex-row justify-end  space-x-4 pr-4">
             {okElement}
             {cancelElement}
           </View>

@@ -2,8 +2,6 @@ import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import {
   Button,
   ConfirmationUI,
-  CustomInput,
-  CustomTextArea,
   Loader,
   ModalWrapper,
   NavigationHeaderWapper,
@@ -13,7 +11,6 @@ import {
 import 'react-native-get-random-values';
 import ImagePicker from 'react-native-image-crop-picker';
 import Upload from '../../assets/upload.png';
-import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   active,
@@ -27,6 +24,7 @@ import {
 import {useFormik} from 'formik';
 import {CreateShopSchema} from '../../yup';
 import {nanoid} from 'nanoid';
+import {CustomTextInput} from '../../components/Inputs';
 
 const CreateShop = ({navigation}) => {
   const dispatch = useDispatch();
@@ -73,10 +71,7 @@ const CreateShop = ({navigation}) => {
   };
 
   return (
-    <ScreenWrapper
-      content={
-        <NavigationHeaderWapper name="Create Shop" back={navigation.goBack} />
-      }>
+    <ScreenWrapper>
       <PageLoader submitting={loading}>
         <Loader />
       </PageLoader>
@@ -89,15 +84,11 @@ const CreateShop = ({navigation}) => {
           onClose={() => dispatch(notActive())}
         />
       </ModalWrapper>
-      
+
       <ScrollView>
-        {/* <NavigationHeaderWapper name="Create Shop" back={navigation.goBack} /> */}
         <View className="h-screen  w-full mx-auto px-10 mb-5">
-          {/* <View className="h-24 flex flex-row justify-center items-center">
-            <Text className="text-xl font-bold text-black">Create Shop</Text>
-          </View> */}
           <View className="flex flex-col justify-evenly w-full">
-            <CustomInput
+            <CustomTextInput
               placeholder="Enter shop name"
               type="text"
               value={values?.name}
@@ -106,7 +97,7 @@ const CreateShop = ({navigation}) => {
               touched={touched?.name}
             />
             <View className="mt-3">
-              <CustomTextArea
+              <CustomTextInput
                 placeholder="Description"
                 type="text"
                 value={values?.description}
@@ -114,6 +105,8 @@ const CreateShop = ({navigation}) => {
                 onBlur={handleBlur('description')}
                 error={errors?.description}
                 touched={touched?.description}
+                multiline={true}
+                numberOfLines={4}
               />
             </View>
           </View>
@@ -121,7 +114,7 @@ const CreateShop = ({navigation}) => {
             <Text className="text-lg text-[#003356] ml-2 mt-4 mb-2 ">
               Contact Address
             </Text>
-            <CustomInput
+            <CustomTextInput
               placeholder="Phone number"
               type="tel"
               value={values?.phoneNumber}
@@ -131,7 +124,7 @@ const CreateShop = ({navigation}) => {
               touched={touched?.phoneNumber}
             />
 
-            <CustomInput
+            <CustomTextInput
               placeholder="Email address"
               type="email"
               value={values?.email}
@@ -140,7 +133,7 @@ const CreateShop = ({navigation}) => {
               error={errors?.email}
               touched={touched?.email}
             />
-            <CustomInput
+            <CustomTextInput
               placeholder="Physical address"
               type="text"
               value={values?.address}

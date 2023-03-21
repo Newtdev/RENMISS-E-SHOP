@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Button, Text, View} from 'react-native';
+import {Alert, Button, ImageBackground, Text, View, Image} from 'react-native';
 
 const HeaderWrapper = ({navigation}) => {
   return (
@@ -14,6 +14,21 @@ const HeaderWrapper = ({navigation}) => {
         <Button onPress={() => navigation.goBack(null)} title="Edit" />
       </View>
     </View>
+  );
+};
+
+export const ShopImageHeader = ({userImage, bgImage}) => {
+  return (
+    <ImageBackground
+      source={userImage}
+      resizeMode="cover"
+      className="h-[128px] w-full  mt-2 flex flex-row items-center">
+      <View
+        className="w-[87.11px]
+h-[91px] rounded-full bg-red-100 ml-2 overflow-hidden">
+        <Image className="w-full h-full" source={bgImage} />
+      </View>
+    </ImageBackground>
   );
 };
 

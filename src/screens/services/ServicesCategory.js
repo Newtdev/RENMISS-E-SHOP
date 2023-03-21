@@ -57,6 +57,7 @@ const ServicesCategory = ({navigation}) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+
           renderItem={({item}) => (
             <CardWrapper banner={item.image}>
               <Pressable

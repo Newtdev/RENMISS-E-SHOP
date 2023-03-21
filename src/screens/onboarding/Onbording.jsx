@@ -4,6 +4,7 @@ import {Dimensions, Pressable, StyleSheet} from 'react-native';
 import {View, Text} from 'react-native';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {DIMENSION} from 'utils/Constant';
 import ImageOne from '../../assets/onboardone.svg';
 import {ONBOARDDATA} from '../../lib';
 import {Button} from '../../sharedcomponent';
@@ -19,8 +20,7 @@ const SlideNavigation = props => {
 };
 
 const Onboarding = ({navigation}) => {
-  const {width} = useWindowDimensions();
-  //   const [active, setActive] = useState(1);
+  const {width} = DIMENSION;
   const [currentSlideIndex, setCurrentPageIndex] = useState(0);
   const ref = useRef();
 
@@ -56,9 +56,7 @@ const Onboarding = ({navigation}) => {
           <Text className="  font-bold text-[24px] text-center px-4">
             {item.heading}
           </Text>
-          <Text className="text-center" style={styles.Text}>
-            {item.description}
-          </Text>
+          <Text className="text-center">{item.description}</Text>
         </View>
         <View className=" flex flex-row mx-auto justify-center items-end h-48 mb-7">
           <SlideNavigation
@@ -81,7 +79,6 @@ const Onboarding = ({navigation}) => {
 
   return (
     <SafeAreaView className="flex-1">
-      {/* {console.log(ONBOARDDATA[0])} */}
       <FlatList
         ref={ref}
         data={ONBOARDDATA}
@@ -89,17 +86,10 @@ const Onboarding = ({navigation}) => {
         keyExtractor={item => item.id}
         showsHorizontalScrollIndicator={false}
         horizontal
-        // extraData={active}
       />
       {/* ONBOARDING UI */}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  Text: {
-    fontFamily: "'Quicksand', sans-serif",
-  },
-});
 
 export default Onboarding;

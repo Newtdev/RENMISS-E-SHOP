@@ -26,6 +26,7 @@ const RatingStars = ({
           isDisabled={isDisabled}
           onFinishRating={ratingCompleted}
         />
+        {/* <Button ref={ratingbtn} onPress={ratingComplete('Hello')} /> */}
       </View>
       {/* <Rating
         showRating
