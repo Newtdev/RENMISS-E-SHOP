@@ -66,9 +66,15 @@ export const Input = ({
 
 export const Loader = () => {
   return (
-    <View>
-      <Lottie source={require('../assets/lotties.json')} autoPlay loop />
-      <Text className="ml-2 text-white mt-10 font-bold">Loading...</Text>
+    <View className="h-24 ">
+      <Lottie
+        height={100}
+        width={100}
+        source={require('../assets/lotties.json')}
+        autoPlay
+        loop
+      />
+      <Text className="ml-2 text-white mt-20 font-bold">Loading...</Text>
     </View>
   );
 };
@@ -285,67 +291,6 @@ export const CustomeFlatList = ({
     />
   );
 };
-
-const CustomRatingBar = ({maxRating, defaultRating, setDefaultRating}) => {
-  const starImageFilled =
-    'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png';
-  // Empty Star. You can also give the path from local
-  const starImageCorner =
-    'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_corner.png';
-  return (
-    <View style={ratingStyle.customRatingBarStyle}>
-      {maxRating.map((item, key) => {
-        return (
-          <TouchableOpacity
-            activeOpacity={0.7}
-            key={item}
-            onPress={() => setDefaultRating(item)}>
-            <Image
-              style={ratingStyle.starImageStyle}
-              source={
-                item <= defaultRating
-                  ? {uri: starImageFilled}
-                  : {uri: starImageCorner}
-              }
-            />
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
-};
-
-export const FiveStarRating = () => {
-  const [defaultRating, setDefaultRating] = useState(1);
-  // To set the max number of Stars
-  const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
-
-  const props = {
-    maxRating,
-    defaultRating,
-    setDefaultRating: val => setDefaultRating(val),
-  };
-
-  return (
-    <View style={ratingStyle.customRatingBarStyle}>
-      <CustomRatingBar {...props} />
-    </View>
-  );
-};
-
-const ratingStyle = StyleSheet.create({
-  customRatingBarStyle: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginTop: 30,
-  },
-  starImageStyle: {
-    width: 27,
-    height: 27,
-    resizeMode: 'cover',
-  },
-});
 
 export const CustomInput = ({
   placeholder,

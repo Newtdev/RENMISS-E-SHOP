@@ -125,6 +125,7 @@ export const CustomTextInput = ({
           borderWidth: 1,
           backgroundColor: COLORS.white,
         }}
+        placeholderTextColor={COLORS?.darkOverlayColor}
         autoFocus={autoFocus} //Boolean type, focuses the input on component
         placeholder={placeholder} //String type
         inputMode={type} //Determines which keyboard to open, e.g.numeric

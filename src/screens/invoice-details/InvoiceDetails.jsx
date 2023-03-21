@@ -20,6 +20,7 @@ import {
   purchaseItem,
   request,
 } from '../../features/invoice';
+import {FormatCurrency} from 'components/CurrencyFormatter';
 
 export const IconWrap = ({name, size, color}) => {
   return <Icon name={'filetext1'} size={size} color={color} />;
@@ -49,7 +50,7 @@ const RenderSponsoredList = ({item}) => {
         </View>
         <View className="flex flex-row items-center mt-1">
           <Text className=" text-[12px] font-bold">
-            {currency(item.oldPrice, {symbol: 'R'}).format()}
+            <FormatCurrency amount={item?.oldPrice} />
           </Text>
         </View>
       </View>

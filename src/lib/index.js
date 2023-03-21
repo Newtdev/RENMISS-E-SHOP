@@ -72,7 +72,7 @@ export const ESHOPDATA = [
     heading: 'My shop',
     description: 'You can fully access your shop here and now',
     image: <Thirdcard width={70} height={70} />,
-    link: 'Create-shop',
+    link: 'my-shop',
   },
   {
     id: 4,

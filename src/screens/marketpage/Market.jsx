@@ -85,8 +85,9 @@ const RenderSponsoredList = (details, width) => {
   );
 };
 
-const Market = ({navigation}) => {
+const Market = () => {
   const {width} = useWindowDimensions();
+  const navigation = useNavigation();
 
   return (
     <ScreenWrapper>
